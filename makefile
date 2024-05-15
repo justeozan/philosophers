@@ -7,3 +7,5 @@ CFLAGS	=	-Werror -Wall -Wextra
 RM		=	rm -rf
 
 SRC		=	src/main.c
+
+

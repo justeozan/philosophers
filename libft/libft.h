@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:21:30 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/04/02 13:12:54 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:10:01 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <stddef.h>
 # include <stdarg.h>
 
+/*-------------2d-------------*/
+char	**dup_2d(char **tab);
+void	free_2d(char **tab);
+size_t	len_2d(char **tab);
+void	putstr_2d(char **tab);
 /*-------------err-------------*/
 void	exit_err(char *err_txt);
 /*-------------file-------------*/

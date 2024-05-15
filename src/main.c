@@ -6,13 +6,13 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:04:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/15 16:09:49 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/15 17:04:16 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	(void)av;
-	(void)ac
+	(void)ac;
 	return (0);
 }

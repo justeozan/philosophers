@@ -6,13 +6,18 @@
 #    By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/13 16:43:33 by ozasahin          #+#    #+#              #
-#    Updated: 2024/05/15 16:46:34 by ozasahin         ###   ########.fr        #
+#    Updated: 2024/05/15 17:21:10 by ozasahin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	libft.a
 
 SRCS	=	\
+			2d/dup_2d.c\
+			2d/free_2d.c\
+			2d/len_2d.c\
+			2d/putstr_2d.c\
+			\
 			err/ft_print_err.c\
 			\
 			file/ft_putchar_fd.c\
@@ -94,31 +99,38 @@ COLOR_BLUE			=	\033[0;34m
 
 # Messages
 CLEAR_MESSAGE		=	\033[0K\r\c
+MESSAGE_OK			=	[\033[32mOK\033[0m]
 MESSAGE_COMPILE		=	$(COLOR_BLUE)Compiling :$(COLOR_RESET)
-MESSAGE_DONE		=	$(COLOR_GREEN)Compilation completed.$(COLOR_RESET)
+MESSAGE_DONE		=	$(MESSAGE_OK) libft compiled.
 MESSAGE_CLEAN		=	$(COLOR_PURPLE)Cleaning up...$(COLOR_RESET)
 MESSAGE_CLEAN_DONE	=	$(COLOR_PURPLE)Cleanup completed.$(COLOR_RESET)
 
 all:	${NAME}
 
 ${NAME}:	${OBJS}
-			@ar rc ${NAME} ${OBJS}
+	@ar rc ${NAME} ${OBJS}
+	@echo "$(MESSAGE_DONE)"
 
-obj/%.o: src/%.c | obj
+obj/%.o:	src/%.c | obj
 	@echo "[...] libft... $(MESSAGE_COMPILE) $*.c\r\c"
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "$(CLEAR_MESSAGE)"
 
 obj:
-		@mkdir -p obj
+	@mkdir -p obj
 
 clean:
-		@${RM} -r obj
+	@echo "$(MESSAGE_CLEAN)\c"
+	@${RM} -r obj
+	@echo "$(MESSAGE_CLEAN_DONE)"
 
-fclean:	clean
-		@${RM} ${NAME}
+fclean:		clean
+	@${RM} ${NAME}
 
-re:		fclean all
+re:			fclean all
+
+norm :
+	norminette | grep -v OK
 
 .PHONY:	all clean fclean re
