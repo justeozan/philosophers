@@ -6,7 +6,7 @@
 #    By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 11:52:13 by ozasahin          #+#    #+#              #
-#    Updated: 2024/05/16 16:04:40 by ozasahin         ###   ########.fr        #
+#    Updated: 2024/05/16 17:30:46 by ozasahin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ MESSAGE_CLEAN_DONE	=	$(COLOR_PURPLE)Cleanup completed.$(COLOR_RESET)
 
 all:		$(NAME)
 
+m:			clear $(NAME)
+
 $(NAME):	$(OBJ)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
 	@echo "$(MESSAGE_DONE2)"
@@ -64,6 +66,9 @@ fclean:		clean
 	@$(RM) $(NAME)
 
 re:		fclean all
+
+clear:
+	clear
 
 ARG := $(shell norminette | grep Error: | wc -l)
 

@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:04:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/16 16:45:48 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:31:47 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_law(t_law *law, t_philos *philos, char **av)
 	law->nbr_philos = av[1];
 	law->philos = philos;
 	if (av[5])
-		law->max_meals = av[5];
+		law->max_meals = (int)ft_atol(av[5]);
 	
 }
 
