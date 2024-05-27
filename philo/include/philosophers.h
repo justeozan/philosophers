@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:03:58 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/16 16:05:59 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/27 11:27:27 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_philos
 	int			id;
 	t_mutex		philo_lock;
 	t_mutex		*first_fork;
+	t_mutex		*second_fork;
 	t_law		*law;
 }	t_philos;
 
