@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:50:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/27 11:51:06 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:13:54 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	init_law(t_law *law, t_philos *philos, char **av)
 		law->max_meals = -1;
 	mutex_handle(&law->write_lock, INIT);
 	mutex_handle(&law->law_mutex, INIT);
-	
 }
 
 void	init_forks(t_mutex *forks, int nbr_philos)
@@ -33,7 +32,7 @@ void	init_forks(t_mutex *forks, int nbr_philos)
 	int	i;
 
 	i = -1;
-	while ( ++i < nbr_philos)
+	while (++i < nbr_philos)
 		mutex_handle(&forks[i], INIT);
 }
 
@@ -46,7 +45,7 @@ void	init_philos(t_philos *philos, t_law *law, t_mutex *forks)
 	{
 		philos[i] = i + 1;
 		philos[i].law = law;
-		if (philos[i].id  % 2 == 0)
+		if (philos[i].id % 2 == 0)
 		{
 			philos[i].second_fork = &philos[i];
 			philos[i].first_fork = &philos[(i + 1) % law->nbr_philos];

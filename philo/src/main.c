@@ -6,29 +6,23 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:04:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/27 12:00:32 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:15:58 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philosophers.h"
 
-void	mutex_handle( , )
+void	mutex_handle(t_mutex *mutex, t_code mutex_code)
 {
-	
+	if (LOCK == mutex_code)
+		pthread_mutex_lock(mutex);
+	else if (UNLOCK == mutex_code)
+		pthread_mutex_unlock(mutex);
+	else if (INIT == mutex_code)
+		pthread_mutex_init(mutex, NULL);
+	else if (DESTROY == mutex_code)
+		pthread_mutex_destroy(mutex);
 }
-
-int	args_no_valid(int ac, char **av)
-{
-	
-}
-
-
-
-void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks)
-{
-	
-}
-
 
 int	main(int ac, char **av)
 {

@@ -6,13 +6,14 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:03:58 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/27 11:27:27 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:56:09 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
+# include <limits.h>
 # include <pthread.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -41,6 +42,21 @@ each philosopher must eat\n"
 
 # define PHILO_MAX 200
 
+/*=== Enumerations ===*/
+
+/* define status code to manage mutex and thread errors */
+typedef enum e_code
+{
+	JOIN,
+	CREATE,
+	INIT,
+	LOCK,
+	UNLOCK,
+	DESTROY,
+	DETACH,
+	LONE_PHILO
+}	t_code;
+
 /*=== Structures prototypes ===*/
 
 typedef struct s_philos	t_philos;
@@ -54,6 +70,8 @@ typedef struct s_philos
 {
 	pthread_t	thread;
 	int			id;
+	bool		is_full;
+	long		last_meal;
 	t_mutex		philo_lock;
 	t_mutex		*first_fork;
 	t_mutex		*second_fork;
@@ -70,12 +88,35 @@ typedef struct s_law
 	long		max_meals;
 	long		start_time;
 	long		nbr_threads_runnings;
+	bool		dead_flag;
+	bool		thread_ready;
 	t_mutex		law_mutex;
 	t_mutex		write_lock;
 	t_philos	*philos;
 }	t_law;
 
 /*=== Functions ===*/
+
+/*---------- check_args ----------*/
+
+int	args_no_valid(int ac, char **av);
+
+/*---------- closing ----------*/
+
+void	close_program(t_law *law, t_mutex *forks, t_philos *philos);
+
+/*---------- do_simulation ----------*/
+
+void	*lone_philo(void *arg);
+bool	dead_loop(t_law *law);
+void	*diner_loop(void *pointer);
+void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks);
+
+/*---------- init ----------*/
+
+void	init_law(t_law *law, t_philos *philos, char **av);
+void	init_forks(t_mutex *forks, int nbr_philos);
+void	init_philos(t_philos *philos, t_law *law, t_mutex *forks);
 
 /*---------- main ----------*/
 
@@ -87,5 +128,17 @@ void	free_data(t_law **law, t_philos **philos, t_mutex **forks);
 void	*ft_calloc(size_t nmemb, size_t size);
 int		init_structs(t_law **law, t_philos **philos, t_mutex **forks, \
 	int nbr_philo);
+
+/*---------- monitor ----------*/
+
+void	last_print(t_law *law, int id);
+bool	is_end_condition(t_law *law);
+bool	all_threads_running(t_mutex *mutex, long *threads, long nbr_philos);
+void	*monitor(void *pointer);
+
+/*---------- monitor ----------*/
+
+void	thread_handler(t_philos *philos, t_code code);
+void	wait_all_threads(t_law *law);
 
 #endif
