@@ -6,7 +6,7 @@
 #    By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 11:52:13 by ozasahin          #+#    #+#              #
-#    Updated: 2024/05/16 17:30:46 by ozasahin         ###   ########.fr        #
+#    Updated: 2024/05/29 15:44:40 by ozasahin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,19 @@
 NAME	=	philo
 
 SRC		=		\
+				src/check_args.c\
+				src/closing.c\
+				src/diner_routing.c\
+				src/do_simulation.c\
+				src/init.c\
+				src/lft.c\
 				src/main.c\
-				src/memory.c
+				src/memory.c\
+				src/monitor.c\
+				src/mutex_access.c\
+				src/mutex_handler.c\
+				src/thread_handler.c\
+				src/time.c
 
 OBJ		=	$(patsubst src/%.c, obj/%.o, $(SRC))
 

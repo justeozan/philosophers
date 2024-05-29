@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:03:58 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/28 15:56:09 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:50:08 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
+# include <sys/time.h>
 # include <unistd.h>
 
 /*=== Color ===*/
@@ -70,6 +72,7 @@ typedef struct s_philos
 {
 	pthread_t	thread;
 	int			id;
+	int			meals_eaten;
 	bool		is_full;
 	long		last_meal;
 	t_mutex		philo_lock;
@@ -99,11 +102,20 @@ typedef struct s_law
 
 /*---------- check_args ----------*/
 
-int	args_no_valid(int ac, char **av);
+int		args_no_valid(int ac, char **av);
 
 /*---------- closing ----------*/
 
 void	close_program(t_law *law, t_mutex *forks, t_philos *philos);
+void	ft_putstr_fd(char *s, int fd);
+void	print_err(char *err_msg);
+
+/*---------- do_simulation ----------*/
+
+void	print_message(t_law *law, char *msg, int id);
+void	think(t_law *law, t_philos *philos, bool pre_sim);
+void	dream(t_law *law, t_philos *philos);
+void	eat(t_philos *philos);
 
 /*---------- do_simulation ----------*/
 
@@ -117,6 +129,13 @@ void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks);
 void	init_law(t_law *law, t_philos *philos, char **av);
 void	init_forks(t_mutex *forks, int nbr_philos);
 void	init_philos(t_philos *philos, t_law *law, t_mutex *forks);
+
+/*---------- lft ----------*/
+
+int		is_digit(const char *s);
+int		ft_isspace(char c);
+int		ft_strlen(char *str);
+long	ft_atol(const char *s);
 
 /*---------- main ----------*/
 
@@ -136,9 +155,27 @@ bool	is_end_condition(t_law *law);
 bool	all_threads_running(t_mutex *mutex, long *threads, long nbr_philos);
 void	*monitor(void *pointer);
 
-/*---------- monitor ----------*/
+/*---------- mutex_access ----------*/
+
+void	set_mtxlong(t_mutex *mutex, long *to_set, long value);
+void	set_mtxbool(t_mutex *mutex, bool *to_set, bool value);
+long	get_mtxlong(t_mutex *mutex, long *to_get);
+bool	get_mtxbool(t_mutex *mutex, bool *to_get);
+void	increase_long(t_mutex *mutex, long *value);
+
+/*---------- mutex_handler ----------*/
+
+void	mutex_handle(t_mutex *mutex, t_code mutex_code);
+
+/*---------- thread_handler ----------*/
 
 void	thread_handler(t_philos *philos, t_code code);
 void	wait_all_threads(t_law *law);
+
+/*---------- time ----------*/
+
+long	get_elapsed_time_ms(long timestamp_start);
+long	get_time(void);
+void	precise_sleep(t_law *law, long ms);
 
 #endif
