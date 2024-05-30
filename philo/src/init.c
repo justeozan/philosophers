@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:50:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/29 15:41:29 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/29 16:10:46 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	init_law(t_law *law, t_philos *philos, char **av)
 {
+	law->philos = philos;
 	law->time_to_die = ft_atol(av[2]);
 	law->time_to_eat = ft_atol(av[3]);
 	law->time_to_sleep = ft_atol(av[4]);
 	law->nbr_philos = (int)ft_atol(av[1]);
-	law->philos = philos;
 	law->thread_ready = false;
 	if (av[5])
 		law->max_meals = (int)ft_atol(av[5]);

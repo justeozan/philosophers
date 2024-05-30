@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:53:19 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/29 15:50:30 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/29 15:59:13 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_message(t_law *law, char *msg, int id)
 	mutex_handle(&law->write_lock, LOCK);
 	time = get_time() - law->start_time;
 	if (!dead_loop(law))
-		printf("GREEN%ld %d %s\nRESET", time, id, msg);
+		printf(GREEN"%ld %d %s\n"RESET, time, id, msg);
 	mutex_handle(&law->write_lock, UNLOCK);
 }
 

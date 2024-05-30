@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:04:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/29 15:04:32 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:50:33 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 	t_philos	*philos;
 	t_mutex		*forks;
 
-	if (args_no_valid(ac, av))
+	if (!args_no_valid(ac, av))
 		return (EXIT_FAILURE);
 	if (!init_structs(&law, &philos, &forks, ft_atol(av[1])))
 		return (print_err(ERR_MALLOC), EXIT_FAILURE);

@@ -6,7 +6,7 @@
 #    By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 11:52:13 by ozasahin          #+#    #+#              #
-#    Updated: 2024/05/29 15:44:40 by ozasahin         ###   ########.fr        #
+#    Updated: 2024/05/30 13:23:18 by ozasahin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ OBJ		=	$(patsubst src/%.c, obj/%.o, $(SRC))
 
 # Controls
 CC			=	cc
-CFLAGS		=	-Werror -Wall -Wextra
+CFLAGS		=	-Werror -Wall -Wextra -fsanitize=thread -g
 INCLUDES	=	-Iinclude
 # LINKS		=
 RM			=	rm -rf
