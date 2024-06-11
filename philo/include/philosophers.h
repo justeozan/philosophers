@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:03:58 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/29 15:50:08 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:38:54 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,16 +100,6 @@ typedef struct s_law
 
 /*=== Functions ===*/
 
-/*---------- check_args ----------*/
-
-int		args_no_valid(int ac, char **av);
-
-/*---------- closing ----------*/
-
-void	close_program(t_law *law, t_mutex *forks, t_philos *philos);
-void	ft_putstr_fd(char *s, int fd);
-void	print_err(char *err_msg);
-
 /*---------- do_simulation ----------*/
 
 void	print_message(t_law *law, char *msg, int id);
@@ -129,6 +119,8 @@ void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks);
 void	init_law(t_law *law, t_philos *philos, char **av);
 void	init_forks(t_mutex *forks, int nbr_philos);
 void	init_philos(t_philos *philos, t_law *law, t_mutex *forks);
+int		init_structs(t_law **law, t_philos **philos, t_mutex **forks, \
+	int nbr_philo);
 
 /*---------- lft ----------*/
 
@@ -136,17 +128,16 @@ int		is_digit(const char *s);
 int		ft_isspace(char c);
 int		ft_strlen(char *str);
 long	ft_atol(const char *s);
+void	*ft_calloc(size_t nmemb, size_t size);
 
 /*---------- main ----------*/
 
+void	close_program(t_law *law, t_mutex *forks, t_philos *philos);
 int		main(int ac, char **av);
 
 /*---------- memory ----------*/
 
 void	free_data(t_law **law, t_philos **philos, t_mutex **forks);
-void	*ft_calloc(size_t nmemb, size_t size);
-int		init_structs(t_law **law, t_philos **philos, t_mutex **forks, \
-	int nbr_philo);
 
 /*---------- monitor ----------*/
 
@@ -177,5 +168,6 @@ void	wait_all_threads(t_law *law);
 long	get_elapsed_time_ms(long timestamp_start);
 long	get_time(void);
 void	precise_sleep(t_law *law, long ms);
+void	ms_sleep(long ms);
 
 #endif

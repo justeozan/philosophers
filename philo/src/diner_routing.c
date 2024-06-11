@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:53:19 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/29 15:59:13 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:26:13 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	print_message(t_law *law, char *msg, int id)
 
 	mutex_handle(&law->write_lock, LOCK);
 	time = get_time() - law->start_time;
-	if (!dead_loop(law))
+	// if (!dead_loop(law))
+	if (!get_mtxbool(&law->law_mutex, &law->dead_flag))
 		printf(GREEN"%ld %d %s\n"RESET, time, id, msg);
 	mutex_handle(&law->write_lock, UNLOCK);
 }
@@ -50,8 +51,8 @@ void	dream(t_law *law, t_philos *philos)
 void	eat(t_philos *philos)
 {
 	mutex_handle(philos->first_fork, LOCK);
-	mutex_handle(philos->second_fork, LOCK);
 	print_message(philos->law, "has taken a fork", philos->id);
+	mutex_handle(philos->second_fork, LOCK);
 	print_message(philos->law, "has taken a fork", philos->id);
 	philos->meals_eaten++;
 	set_mtxlong(&philos->philo_lock, &philos->last_meal, get_time());

@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:31:56 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/29 14:32:23 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/11 13:53:27 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,18 @@ long	ft_atol(const char *s)
 		i++;
 	}
 	return (result * sign);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*ptr;
+
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	if (size != 0 && nmemb > (size_t)(-1) / size)
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+	return ((void *)memset(ptr, 0, nmemb * size));
 }

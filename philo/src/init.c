@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:50:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/05/29 16:10:46 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:26:32 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_law(t_law *law, t_philos *philos, char **av)
 {
+	law->dead_flag = 0;
 	law->philos = philos;
 	law->time_to_die = ft_atol(av[2]);
 	law->time_to_eat = ft_atol(av[3]);
@@ -58,4 +59,18 @@ void	init_philos(t_philos *philos, t_law *law, t_mutex *forks)
 		}
 		i++;
 	}
+}
+
+int	init_structs(t_law **law, t_philos **philos, t_mutex **forks, int nbr_philo)
+{
+	*law = (t_law *)ft_calloc(1, sizeof(t_law));
+	if (!*law)
+		return (false);
+	*philos = (t_philos *)ft_calloc(nbr_philo, sizeof(t_philos));
+	if (!*philos)
+		return (free_data(law, philos, forks), false);
+	*forks = (t_mutex *)ft_calloc(nbr_philo, sizeof(t_mutex));
+	if (!*forks)
+		return (free_data(law, philos, forks), false);
+	return (true);
 }

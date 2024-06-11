@@ -6,7 +6,7 @@
 #    By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/16 11:52:13 by ozasahin          #+#    #+#              #
-#    Updated: 2024/05/30 13:23:18 by ozasahin         ###   ########.fr        #
+#    Updated: 2024/06/11 15:14:03 by ozasahin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@
 
 NAME	=	philo
 
+RUN		=	philo_debug
+
 SRC		=		\
-				src/check_args.c\
-				src/closing.c\
 				src/diner_routing.c\
 				src/do_simulation.c\
 				src/init.c\
@@ -33,7 +33,8 @@ OBJ		=	$(patsubst src/%.c, obj/%.o, $(SRC))
 
 # Controls
 CC			=	cc
-CFLAGS		=	-Werror -Wall -Wextra -fsanitize=thread -g
+DEBUG		=	-fsanitize=thread -g
+CFLAGS		=	-Werror -Wall -Wextra -pthread -fsanitize=thread
 INCLUDES	=	-Iinclude
 # LINKS		=
 RM			=	rm -rf
@@ -56,13 +57,19 @@ MESSAGE_CLEAN_DONE	=	$(COLOR_PURPLE)Cleanup completed.$(COLOR_RESET)
 
 all:		$(NAME)
 
+d:			$(RUN)
+
 m:			clear $(NAME)
 
 $(NAME):	$(OBJ)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJ) -o $(NAME)
 	@echo "$(MESSAGE_DONE2)"
 
-obj/%.o:	src/%.c
+$(RUN):	$(OBJ)
+	@$(CC) $(CFLAGS) $(DEBUG) $(INCLUDES) $(OBJ) -o $(RUN)
+	@echo "$(MESSAGE_DONE2)"
+
+obj/%.o:	src/%.c makefile include/philosophers.h
 	@echo "[...] libft... $(MESSAGE_COMPILE) $*.c\r\c"
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
@@ -74,7 +81,7 @@ clean:
 	@echo "$(MESSAGE_CLEAN_DONE)"
 
 fclean:		clean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(RUN)
 
 re:		fclean all
 
