@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 13:10:25 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/11 14:50:33 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:23:45 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ void	precise_sleep(t_law *law, long ms)
 
 void	ms_sleep(long ms)
 {
+	// printf(" time = %ld\n",ms);
+	fflush(stdout);
 	usleep(ms * 1000);
 }

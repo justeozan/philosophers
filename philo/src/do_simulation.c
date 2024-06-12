@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:38:24 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/11 15:26:20 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/12 12:41:30 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,20 @@ static void	pre_desynchronize(t_philos *philo)
 		precise_sleep(philo->law, 0.9 * philo->law->time_to_sleep);
 }
 
-static void	keep_desynchronize(t_philos *philos)
-{
-	long	t_die;
-	long	t_loop;
+// static void	keep_desynchronize(t_philos *philos)
+// {
+// 	long	t_die;
+// 	long	t_loop;
 	
-	t_die = philos->law->time_to_die;
-	t_loop = philos->law->time_to_eat + philos->law->time_to_sleep;
-	// printf(" id : %d think %ld\n",philos->id, (t_die - t_loop) - 50 );
-	// fflush(stdout);
-	if (t_die > t_loop + 50)
-		ms_sleep((t_die - t_loop) - 50);
-	// printf(" id : %d do not think anymore\n",philos->id);
-	// fflush(stdout);
-}
+// 	t_die = philos->law->time_to_die;
+// 	t_loop = philos->law->time_to_eat + philos->law->time_to_sleep;
+// 	// printf(" id : %d think %ld\n",philos->id, (t_die - t_loop) - 50 );
+// 	// fflush(stdout);
+// 	if (t_die > t_loop + 50)
+// 		ms_sleep((t_die - t_loop) - 50);
+// 	// printf(" id : %d do not think anymore\n",philos->id);
+// 	// fflush(stdout);
+// }
 
 void	*diner_loop(void *pointer)
 {
@@ -70,8 +70,8 @@ void	*diner_loop(void *pointer)
 		eat(philos);
 		dream(law, philos);
 		think(law, philos, false);
-		if (law->nbr_philos % 2 != 0)
-			keep_desynchronize(philos);
+		// if (law->nbr_philos % 2 != 0)
+		// 	keep_desynchronize(philos);
 	}
 	return (pointer);
 }

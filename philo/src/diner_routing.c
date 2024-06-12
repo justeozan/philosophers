@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:53:19 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/11 14:26:13 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/12 11:32:28 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	think(t_law *law, t_philos *philos, bool pre_sim)
 void	dream(t_law *law, t_philos *philos)
 {
 	print_message(law, "is sleeping", philos->id);
+	// ms_sleep(law->time_to_sleep);
 	precise_sleep(law, law->time_to_sleep);
 }
 
@@ -57,6 +58,8 @@ void	eat(t_philos *philos)
 	philos->meals_eaten++;
 	set_mtxlong(&philos->philo_lock, &philos->last_meal, get_time());
 	print_message(philos->law, "is eating", philos->id);
+	
+	// ms_sleep(philos->law->time_to_eat);
 	precise_sleep(philos->law, philos->law->time_to_eat);
 	if (philos->meals_eaten == philos->law->max_meals)
 		set_mtxbool(&philos->philo_lock, &philos->is_full, true);
