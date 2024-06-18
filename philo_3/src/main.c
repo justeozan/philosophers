@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sei <sei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:04:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/14 21:58:59 by sei              ###   ########.fr       */
+/*   Updated: 2024/06/18 15:25:29 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	close_program(t_law *law, t_mutex *forks_mtx, t_philos *philos)
 	while (++i < law->nbr_philos)
 		mutex_handle(&forks_mtx[i], DESTROY);
 	// free_data(&law, &philos, &forks);
-	free_data(&law, &philos);
+	free_data(&law);
 }
 
 static bool	is_over_max_or_empty(char *content)
@@ -70,23 +70,53 @@ static bool	check_syntax_and_size(char **av)
 	return (true);
 }
 
-int	main(int ac, char **av)
+static void	initialize_ptr_to_null(t_law *law, t_philos *philos)
+{
+	philos->first_fork = NULL;
+	philos->second_fork = NULL;
+	philos->right_fork = NULL;
+	philos->left_fork = NULL;
+	law->forks = NULL;
+	law->forks_mtx = NULL;
+	law->philos = NULL;
+}
+
+int	main2(int ac, char **av)
 {
 	t_law		*law;
 	t_philos	*philos;
 	// t_mutex		*forks;
 
+	law = NULL;
+	philos = NULL;
+	initialize_ptr_to_null(law, philos);
 	if (ac != 5 && ac != 6)
 		return (printf(RED ERR_ARG_NBR RESET), EXIT_FAILURE);
 	if (!check_syntax_and_size(av))
 		return (EXIT_FAILURE);
 	// if (!init_structs(&law, &philos, &forks, ft_atol(av[1])))
 	// if (!init_structs(&law, &philos, &law->forks, ft_atol(av[1])))
-	if (!init_law2(&law, &philos, av, ft_atol(av[1])))
+	if (!init_law3(&law, &philos, av, ft_atol(av[1])))
 		return (printf(RED ERR_MALLOC RESET), EXIT_FAILURE);
 	// init_law(law, philos, av);
 	init_forks(law->forks, law->nbr_philos);
 	init_philos(philos, law, law->forks);
-	do_simulation(law, philos, law->forks_mtx, law->forks);
+	// do_simulation(law, philos, law->forks_mtx, law->forks);
+	do_simulation(law, philos, law->forks_mtx);
+	return (0);
+}
+
+int	main(int ac, char **av)
+{
+	t_law	law;
+
+	if (ac != 5 && ac != 6)
+		return (printf(RED ERR_ARG_NBR RESET), EXIT_FAILURE);
+	if (!check_syntax_and_size(av))
+		return (EXIT_FAILURE);
+	if (!initialize_data(&law, ft_atol(av[1])))
+		return (printf(RED ERR_MALLOC RESET), EXIT_FAILURE);
+	
+	free_data(&law);
 	return (0);
 }

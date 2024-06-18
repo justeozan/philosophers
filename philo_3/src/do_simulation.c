@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_simulation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sei <sei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:38:24 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/14 21:52:07 by sei              ###   ########.fr       */
+/*   Updated: 2024/06/18 10:03:37 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	*diner_loop(void *pointer)
 	return (pointer);
 }
 
-void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks_mtx, int *forks)
+// void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks_mtx, int *forks)
+void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks_mtx)
 {
 	pthread_t	observator;
 	int			i;

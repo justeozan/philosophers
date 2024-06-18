@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sei <sei@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:03:58 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/14 21:59:37 by sei              ###   ########.fr       */
+/*   Updated: 2024/06/11 14:38:54 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ typedef struct s_philos
 	t_mutex		philo_lock;
 	t_mutex		*first_fork;
 	t_mutex		*second_fork;
-	int			*right_fork;
-	int			*left_fork;
 	t_law		*law;
 }	t_philos;
 
@@ -93,11 +91,8 @@ typedef struct s_law
 	long		max_meals;
 	long		start_time;
 	long		nbr_threads_runnings;
-	// This is a forks array, where index represent the id of each fork
 	bool		dead_flag;
 	bool		thread_ready;
-	int			*forks;
-	t_mutex		*forks_mtx;
 	t_mutex		law_mutex;
 	t_mutex		write_lock;
 	t_philos	*philos;
@@ -117,22 +112,15 @@ void	eat(t_philos *philos);
 void	*lone_philo(void *arg);
 bool	dead_loop(t_law *law);
 void	*diner_loop(void *pointer);
-// void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks);
-void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks_mtx, int *forks);
+void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks);
 
 /*---------- init ----------*/
 
 void	init_law(t_law *law, t_philos *philos, char **av);
-// void	init_forks(t_mutex *forks, int nbr_philos);
-void	init_forks(int *forks, int nbr_philos);
-// void	init_philos(t_philos *philos, t_law *law, t_mutex *forks);
-void	init_philos(t_philos *philos, t_law *law, int *forks);
-/* int		init_structs(t_law **law, t_philos **philos, t_mutex **forks, \
-		int nbr_philo);*/
-int		init_structs(t_law **law, t_philos **philos, int **forks, \
+void	init_forks(t_mutex *forks, int nbr_philos);
+void	init_philos(t_philos *philos, t_law *law, t_mutex *forks);
+int		init_structs(t_law **law, t_philos **philos, t_mutex **forks, \
 	int nbr_philo);
-
-void	init_law2(t_law *law, t_philos *philos, char **av, int nbr_philo_tmp);
 
 /*---------- lft ----------*/
 
@@ -144,13 +132,12 @@ void	*ft_calloc(size_t nmemb, size_t size);
 
 /*---------- main ----------*/
 
-void	close_program(t_law *law, t_mutex *forks_mtx, t_philos *philos);
+void	close_program(t_law *law, t_mutex *forks, t_philos *philos);
 int		main(int ac, char **av);
 
 /*---------- memory ----------*/
 
-void	free_data(t_law **law, t_philos **philos);
-// void	free_data(t_law **law, t_philos **philos, t_mutex **forks);
+void	free_data(t_law **law, t_philos **philos, t_mutex **forks);
 
 /*---------- monitor ----------*/
 
