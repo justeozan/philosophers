@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:03:58 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/18 10:47:32 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:49:48 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,21 +123,23 @@ void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks_mtx);
 
 /*---------- init ----------*/
 
+// void	init_forks(int *forks, int nbr_philos);
 // void	init_law(t_law *law, t_philos *philos, char **av);
 // bool	init_law2(t_law *law, t_philos *philos, char **av, int nbr_philo_tmp);
 // void	init_forks(t_mutex *forks, int nbr_philos);
-void	init_forks(int *forks, int nbr_philos);
 // void	init_philos(t_philos *philos, t_law *law, t_mutex *forks);
-void	init_philos(t_philos *philos, t_law *law, int *forks);
 /* int		init_structs(t_law **law, t_philos **philos, t_mutex **forks, \
 		int nbr_philo);*/
-int		init_structs(t_law **law, t_philos **philos, int **forks, \
-	int nbr_philo);
-
+// int		init_structs(t_law **law, t_philos **philos, int **forks, \
+// 	int nbr_philo);
 /* Init law3 is a mashup of init law and init_struct */
-bool	init_law3(t_law **law, t_philos **philos, char **av, int nbr_philo_tmp);
+// bool	init_law3(t_law **law, t_philos **philos, char **av, int nbr_philo_tmp);
 
-bool	initialize_data(t_law *law, int nb_philo);
+
+/*---------- init V3 ----------*/
+void	init_mutex(t_law *law, int nbr_philos);
+void	init_philos(t_philos *philos, t_law *law, int *forks);
+bool	initialize_data(t_law *law, int nb_philo, char **av);
 
 
 /*---------- lft ----------*/
@@ -156,7 +158,7 @@ int		main(int ac, char **av);
 /*---------- memory ----------*/
 
 void	free_data(t_law *law);
-void	free_data2(t_law **law, t_philos **philos);
+// void	free_data2(t_law **law, t_philos **philos);
 // void	free_data(t_law **law, t_philos **philos, t_mutex **forks);
 
 /*---------- monitor ----------*/
