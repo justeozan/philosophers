@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:53:19 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/21 11:11:43 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/21 13:40:01 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,29 @@ void	eat(t_philos *philos)
 	mutex_handle(philos->second_fork, UNLOCK);
 }
 
-take the fork(fork a) {
+// take the fork(fork a) {
 	
-	while (true) {
-		try_to_lock();
+// 	while (true) {
+// 		try_to_lock();
+// 	}
+// }
+
+static void	take_fork(t_mutex *forks_mutex, bool fork)
+{
+	while (fork == false) //fork is not taken
+	{
+		pthread_mutex_lock(forks_mutex);
+		fork = 1;
+		
 	}
+	
 }
 
 void	eat(t_philos *philos)
 {
 	// first step
 	// mutex_handle(philos->first_fork, LOCK);
-	takethefork(fork);
-	pthread_mutex_lock(philos->first_fork);
-	philos->left_fork = &philos->law->forks[philos->id - 1];
+	take_fork(philos->first_fork, philos->left_fork);
 	print_message(philos->law, "has taken a fork", philos->id);
 	// mutex_handle(philos->first_fork, UNLOCK);
 	pthread_mutex_unlock(philos->first_fork);
