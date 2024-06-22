@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sei <sei@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 17:03:58 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/18 15:49:48 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/18 22:27:02 by sei              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	do_simulation(t_law *law, t_philos *philos, t_mutex *forks_mtx);
 // void	init_philos(t_philos *philos, t_law *law, t_mutex *forks);
 /* int		init_structs(t_law **law, t_philos **philos, t_mutex **forks, \
 		int nbr_philo);*/
-// int		init_structs(t_law **law, t_philos **philos, int **forks, \
+// int		init_structs(t_law **law, t_philos **philos, int **forks, 
 // 	int nbr_philo);
 /* Init law3 is a mashup of init law and init_struct */
 // bool	init_law3(t_law **law, t_philos **philos, char **av, int nbr_philo_tmp);
