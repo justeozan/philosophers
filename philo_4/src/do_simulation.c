@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:38:24 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/21 11:12:11 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:16:21 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	*diner_loop(void *pointer)
 	pre_desynchronize(philos);
 	while (!get_mtxbool(&law->law_mutex, &law->dead_flag))
 	{
-		eat(philos);
+		eat(law, philos);
 		dream(law, philos);
 		think(law, philos, false);
 		if (law->nbr_philos % 2 != 0 && law->nbr_philos < 31)

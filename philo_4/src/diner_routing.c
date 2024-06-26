@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 14:53:19 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/21 13:40:01 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:14:03 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,14 @@ void	dream(t_law *law, t_philos *philos)
 	precise_sleep(law, law->time_to_sleep);
 }
 
-void	eat(t_philos *philos)
+void	eat(t_law *law, t_philos *philos)
 {
-	mutex_handle(philos->first_fork, LOCK);
+	while (get_mtxbool(&law->forks_mtx[philos->f_fork_id], philos->first_fork)
+		|| get_mtxbool(&law->forks_mtx[philos->s_fork_id], philos->second_fork))
+		usleep(100);
+	set_mtxbool(&law->forks_mtx[philos->f_fork_id], philos->first_fork, true);
+	set_mtxbool(&law->forks_mtx[philos->s_fork_id], philos->second_fork, true);
 	print_message(philos->law, "has taken a fork", philos->id);
-	mutex_handle(philos->second_fork, LOCK);
 	print_message(philos->law, "has taken a fork", philos->id);
 	philos->meals_eaten++;
 	set_mtxlong(&philos->philo_lock, &philos->last_meal, get_time());
@@ -59,53 +62,6 @@ void	eat(t_philos *philos)
 	precise_sleep(philos->law, philos->law->time_to_eat);
 	if (philos->meals_eaten == philos->law->max_meals)
 		set_mtxbool(&philos->philo_lock, &philos->is_full, true);
-	mutex_handle(philos->first_fork, UNLOCK);
-	mutex_handle(philos->second_fork, UNLOCK);
-}
-
-// take the fork(fork a) {
-	
-// 	while (true) {
-// 		try_to_lock();
-// 	}
-// }
-
-static void	take_fork(t_mutex *forks_mutex, bool fork)
-{
-	while (fork == false) //fork is not taken
-	{
-		pthread_mutex_lock(forks_mutex);
-		fork = 1;
-		
-	}
-	
-}
-
-void	eat(t_philos *philos)
-{
-	// first step
-	// mutex_handle(philos->first_fork, LOCK);
-	take_fork(philos->first_fork, philos->left_fork);
-	print_message(philos->law, "has taken a fork", philos->id);
-	// mutex_handle(philos->first_fork, UNLOCK);
-	pthread_mutex_unlock(philos->first_fork);
-
-
-	// sec step
-	pthread_mutex_lock(philos->second_fork);
-	philos->right_fork = &philos->law->forks[philos->id - 1];
-	// mutex_handle(philos->second_fork, LOCK);
-	print_message(philos->law, "has taken a fork", philos->id);
-	philos->meals_eaten++;
-	print_message(philos->law, "is eating", philos->id);
-	precise_sleep(philos->law, philos->law->time_to_eat);
-	if (philos->meals_eaten == philos->law->max_meals)
-		set_mtxbool(&philos->philo_lock, &philos->is_full, true);
-	philos->left_fork = NULL;
-	philos->right_fork = NULL;
-	pthread_mutex_unlock(philos->second_fork);
-	// mutex_handle(philos->second_fork, UNLOCK);
-
-
-	set_mtxlong(&philos->philo_lock, &philos->last_meal, get_time());
+	set_mtxbool(&law->forks_mtx[philos->f_fork_id], philos->first_fork, false);
+	set_mtxbool(&law->forks_mtx[philos->s_fork_id], philos->second_fork, false);
 }

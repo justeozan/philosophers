@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 16:04:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/21 11:13:00 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:58:35 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	close_program(t_law *law, t_mutex *forks, t_philos *philos)
 	i = -1;
 	while (++i < law->nbr_philos)
 		mutex_handle(&forks[i], DESTROY);
-	free_data(&law, &philos, &forks);
+	free_data(&law, &philos);
 }
 
 static bool	is_over_max_or_empty(char *content)
@@ -73,13 +73,12 @@ int	main(int ac, char **av)
 {
 	t_law		*law;
 	t_philos	*philos;
-	// t_mutex		*forks;
 
 	if (ac != 5 && ac != 6)
 		return (printf(RED ERR_ARG_NBR RESET), EXIT_FAILURE);
 	if (!check_syntax_and_size(av))
 		return (EXIT_FAILURE);
-	if (!init_structs(&law, &philos, &law->forks_mtx, ft_atol(av[1])))
+	if (!init_structs(&law, &philos, ft_atol(av[1])))
 		return (printf(RED ERR_MALLOC RESET), EXIT_FAILURE);
 	init_law(law, philos, av);
 	init_forks(law->forks_mtx, law->nbr_philos);

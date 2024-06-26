@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:38:24 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/18 11:25:29 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/26 11:17:59 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	*diner_loop(void *pointer)
 	increase_long(&law->law_mutex, &law->nbr_threads_runnings);
 	set_mtxlong(&philos->philo_lock, &philos->last_meal, law->start_time);
 	pre_desynchronize(philos);
-	// while (!dead_loop(law))get_mtxbool(philos->law->law_mutex, philos->law->dead_flag)
 	while (!get_mtxbool(&law->law_mutex, &law->dead_flag))
 	{
 		eat(philos);
