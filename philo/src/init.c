@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 11:50:44 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/11 14:26:32 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/26 14:27:03 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,39 @@ void	init_law(t_law *law, t_philos *philos, char **av)
 	mutex_handle(&law->law_mutex, INIT);
 }
 
-void	init_forks(t_mutex *forks, int nbr_philos)
+void	init_forks(t_mutex *forks_mtx, int nbr_philos)
 {
 	int	i;
 
 	i = -1;
 	while (++i < nbr_philos)
-		mutex_handle(&forks[i], INIT);
+		mutex_handle(&forks_mtx[i], INIT);
 }
 
-void	init_philos(t_philos *philos, t_law *law, t_mutex *forks)
+// void	init_philos(t_philos *philos, t_law *law, t_mutex *forks)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < law->nbr_philos)
+// 	{
+// 		philos[i].id = i + 1;
+// 		philos[i].law = law;
+// 		if (philos[i].id % 2 == 0)
+// 		{
+// 			philos[i].second_fork = &forks[i];
+// 			philos[i].first_fork = &forks[(i + 1) % law->nbr_philos];
+// 		}
+// 		else
+// 		{
+// 			philos[i].first_fork = &forks[i];
+// 			philos[i].second_fork = &forks[(i + 1) % law->nbr_philos];
+// 		}
+// 		i++;
+// 	}
+// }
+
+void	init_philos(t_philos *philos, t_law *law, bool *forks)
 {
 	int	i;
 
@@ -47,7 +70,7 @@ void	init_philos(t_philos *philos, t_law *law, t_mutex *forks)
 	{
 		philos[i].id = i + 1;
 		philos[i].law = law;
-		if (philos[i].id % 2 == 0)
+		if (i != law->nbr_philos - 1)
 		{
 			philos[i].second_fork = &forks[i];
 			philos[i].first_fork = &forks[(i + 1) % law->nbr_philos];
@@ -61,16 +84,19 @@ void	init_philos(t_philos *philos, t_law *law, t_mutex *forks)
 	}
 }
 
-int	init_structs(t_law **law, t_philos **philos, t_mutex **forks, int nbr_philo)
+int	init_structs(t_law **law, t_philos **philos, int nbr_philo)
 {
 	*law = (t_law *)ft_calloc(1, sizeof(t_law));
 	if (!*law)
 		return (false);
 	*philos = (t_philos *)ft_calloc(nbr_philo, sizeof(t_philos));
 	if (!*philos)
-		return (free_data(law, philos, forks), false);
-	*forks = (t_mutex *)ft_calloc(nbr_philo, sizeof(t_mutex));
-	if (!*forks)
-		return (free_data(law, philos, forks), false);
+		return (free_data(law, philos), false);
+	(*law)->forks_mtx = (t_mutex *)ft_calloc(nbr_philo, sizeof(t_mutex));
+	if (!((*law)->forks_mtx))
+		return (free_data(law, philos), false);
+	(*law)->forks = (bool *)ft_calloc(nbr_philo, sizeof(bool));
+	if (!(*law)->forks)
+		return (free_data(law, philos), false);
 	return (true);
 }

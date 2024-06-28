@@ -6,7 +6,7 @@
 /*   By: ozasahin <ozasahin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 10:58:49 by ozasahin          #+#    #+#             */
-/*   Updated: 2024/06/25 15:09:12 by ozasahin         ###   ########.fr       */
+/*   Updated: 2024/06/26 13:35:43 by ozasahin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*monitor(void *pointer)
 	while (!all_threads_running(&law->law_mutex, &law->nbr_threads_runnings,
 			law->nbr_philos))
 		usleep(1000);
-	usleep(3000);
+	usleep(5000);
 	while (!is_end_condition(law))
 	{
 		usleep(3000);
